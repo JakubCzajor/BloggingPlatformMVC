@@ -39,5 +39,37 @@ namespace BloggingPlatform.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryObj = _unitOfWork.Category.Get(id);
+
+            if (categoryObj is null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryObj);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Category updated successfully.";
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }

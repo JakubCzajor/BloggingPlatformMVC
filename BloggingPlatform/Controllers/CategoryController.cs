@@ -71,5 +71,39 @@ namespace BloggingPlatform.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryObj = _unitOfWork.Category.Get(id);
+
+            if (categoryObj is null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryObj);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int id)
+        {
+            var categoryObj = _unitOfWork.Category.Get(id);
+
+            if (categoryObj is null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Category.Remove(categoryObj);
+            _unitOfWork.Save();
+            TempData["success"] = "Category deleted successfully.";
+            return RedirectToAction("Index");
+        }
     }
 }

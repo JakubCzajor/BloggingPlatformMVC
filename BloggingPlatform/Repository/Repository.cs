@@ -32,7 +32,7 @@ namespace BloggingPlatform.Repository
             return query.ToList();
         }
 
-        public void Delete(T entity)
+        public void Remove(T entity)
         {
             dbSet.Remove(entity);
         }

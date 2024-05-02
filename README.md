@@ -10,6 +10,7 @@ BloggingPlatform is an ASP.NET Core 8 MVC Web Application designed to provide a 
   - SQL Server
   - ASP.NET Core Identity
   - Bootstrap
+  - jQuery
 
 - **Database Tables**:
   - Posts

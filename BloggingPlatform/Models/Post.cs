@@ -12,7 +12,7 @@ namespace BloggingPlatform.Models
         [Required]
         [MaxLength(50)]
         public string Title { get; set; }
-        public string Body { get; set; }
+        public string Content { get; set; }
         [Required]
         public string Author { get; set; }
 

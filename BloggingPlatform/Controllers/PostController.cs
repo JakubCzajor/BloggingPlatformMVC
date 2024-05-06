@@ -21,25 +21,38 @@ namespace BloggingPlatform.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            if (id == null || id == 0)
+            {
+                return View(new Post());
+            }
+ 
+            var postObj = _unitOfWork.Post.Get(id);
+            return View(postObj);
         }
 
         [HttpPost]
-        public IActionResult Create(Post obj)
+        public IActionResult Upsert(Post obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Post.Add(obj);
+                if (obj.Id == 0)
+                {
+                    _unitOfWork.Post.Add(obj);
+                    TempData["success"] = "Post created successfully.";
+                }
+                else
+                {
+                    _unitOfWork.Post.Update(obj);
+                    TempData["success"] = "Post updated successfully.";
+                }
+
                 _unitOfWork.Save();
-                TempData["success"] = "Post created successfully.";
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return View(new Post());
         }
-
-
     }
 }
